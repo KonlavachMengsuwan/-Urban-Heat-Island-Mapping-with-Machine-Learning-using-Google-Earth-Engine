@@ -89,9 +89,11 @@ Example evaluation metrics:
  - Classified heat stress map
  - Optional: export results as GeoTIFF or CSV
 
-If exporting, see `code/export_instructions.md` for guidance.
-
 ---
+![1_LST](https://github.com/user-attachments/assets/fa177034-5ae7-4a4b-846c-0397106ba245)
+![2_Heat](https://github.com/user-attachments/assets/cf8824ed-2dc1-4066-b750-aa1309d72312)
+![3_Zoom1](https://github.com/user-attachments/assets/1d5af663-7edb-4e4c-b2ac-36841126099e)
+![4_Zoom2](https://github.com/user-attachments/assets/cefbefe3-0df6-462e-9e4d-a978cb49564e)
 
 ## 💡 Applications
 
@@ -106,12 +108,12 @@ If exporting, see `code/export_instructions.md` for guidance.
 - Google Earth Engine Documentation: https://developers.google.com/earth-engine
 - Landsat 8 Collection 2 Level-2 dataset
 - NDVI & NDBI index formulas
-
+- Project code: https://code.earthengine.google.com/155683c7c19a54f488da76d45f9c1bde
 ---
 
 ## 🤝 Acknowledgements
 
-This project was developed by [Your Name] as a machine learning and remote sensing application using Google Earth Engine.
+This project was developed by Konlavach Mengsuwan as a machine learning and remote sensing application using Google Earth Engine.
 
 ---
 
