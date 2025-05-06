@@ -117,6 +117,44 @@ This project was developed by Konlavach Mengsuwan as a machine learning and remo
 
 ---
 
+## Code
+```
+var aoi = ee.Geometry.Rectangle([13.1, 52.3, 13.7, 52.7]);  // Example: Berlin
+Map.centerObject(aoi, 10);
+
+var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
+              .filterBounds(aoi)
+              .filterDate('2024-06-01', '2024-08-31')  // Summer months
+              .filter(ee.Filter.lt('CLOUD_COVER', 10))
+              .median();
+
+var lst = landsat.select('ST_B10')
+                 .multiply(0.00341802)
+                 .add(149.0)
+                 .subtract(273.15);  // Convert to Celsius
+
+var vizParams = {min: 20, max: 40, palette: ['blue', 'green', 'yellow', 'red']};
+Map.addLayer(lst.clip(aoi), vizParams, 'Land Surface Temperature');
+
+var urban = ee.Image('ESA/WorldCover/v100/2020')
+              .eq(50);  // 50 = urban class
+              
+var urbanLST = lst.updateMask(urban);
+Map.addLayer(urbanLST.clip(aoi), vizParams, 'Urban LST');
+
+var districts = ee.FeatureCollection('FAO/GAUL_SIMPLIFIED_500m/2015/level2')
+                  .filterBounds(aoi);
+
+var stats = urbanLST.reduceRegions({
+  collection: districts,
+  reducer: ee.Reducer.mean(),
+  scale: 30
+});
+
+print(stats);
+
+```
+
 ## 📢 License
 
 MIT License
