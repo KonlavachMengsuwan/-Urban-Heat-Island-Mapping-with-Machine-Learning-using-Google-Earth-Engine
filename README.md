@@ -32,6 +32,12 @@ This project maps **Urban Heat Islands (UHI)** by classifying **land surface tem
 
 ---
 
+![1_LST](https://github.com/user-attachments/assets/fa177034-5ae7-4a4b-846c-0397106ba245)
+![2_Heat](https://github.com/user-attachments/assets/cf8824ed-2dc1-4066-b750-aa1309d72312)
+![3_Zoom1](https://github.com/user-attachments/assets/1d5af663-7edb-4e4c-b2ac-36841126099e)
+![4_Zoom2](https://github.com/user-attachments/assets/cefbefe3-0df6-462e-9e4d-a978cb49564e)
+
+
 ## 🖥️ Tools & Technologies
 
 - **Google Earth Engine (JavaScript API)**
@@ -50,7 +56,6 @@ _Colors indicate heat stress zones:_
 - Yellow = Medium
 - Orange = High
 - Red = Extreme
-
 ---
 
 ## 📈 Accuracy
@@ -67,39 +72,59 @@ Example evaluation metrics:
 [1 22 2 0]
 [0 1 24 1]
 [0 0 1 26]]
-
 ```
+
+
+![image](https://github.com/user-attachments/assets/d54e08ab-c7b4-44e4-8d0f-b66b61fcb096)
+
+![image](https://github.com/user-attachments/assets/a910db7e-8125-44e8-ad7f-4bf361660167)
+
 
 
 (Note: Actual numbers may vary depending on study area and sample selection.)
 
 ---
 
+
+---
+
+## ✨ Results Interpretation
+
+✅ The classified heat stress zones reveal **spatial variations in heat exposure across the urban landscape**.
+
+Key findings:
+
+- **Low heat stress (green zones)** are concentrated in vegetated and peri-urban areas, benefiting from vegetation cooling.
+- **Medium to high heat stress (yellow/orange zones)** dominate built-up urban cores, where impervious surfaces reduce evapotranspiration.
+- **Extreme heat stress zones (red)** cluster in densely built, industrial, or low-vegetation zones, representing potential urban heat island hotspots.
+
+👉 The map highlights where **urban cooling interventions (e.g., green roofs, tree planting)** could be prioritized to mitigate heat stress.
+
+---
+
 ## ✨ How to Reproduce
 
 1. Open [Google Earth Engine Code Editor](https://code.earthengine.google.com/).
-2. Create a new script and copy the contents of `code/uhi_mapping.js` into it.
+2. Create a new script and copy the contents of `code/uhi_mapping_ml.js` into it.
 3. Adjust:
  - `aoi` (Area of Interest) coordinates
- - Date range (e.g., summer season)
- - Heat stress classification thresholds if needed
+ - Date range (e.g., summer months)
+ - Classification thresholds if needed
 4. Run the script.
 5. View:
  - Land Surface Temperature map
- - Classified heat stress map
+ - Machine-learning-classified heat stress map
  - Optional: export results as GeoTIFF or CSV
 
+If exporting, see `code/export_instructions.md` for guidance.
+
 ---
-![1_LST](https://github.com/user-attachments/assets/fa177034-5ae7-4a4b-846c-0397106ba245)
-![2_Heat](https://github.com/user-attachments/assets/cf8824ed-2dc1-4066-b750-aa1309d72312)
-![3_Zoom1](https://github.com/user-attachments/assets/1d5af663-7edb-4e4c-b2ac-36841126099e)
-![4_Zoom2](https://github.com/user-attachments/assets/cefbefe3-0df6-462e-9e4d-a978cb49564e)
 
 ## 💡 Applications
 
-✅ Urban heat island visualization  
-✅ Identify heat-stressed zones for urban planning  
-✅ Support heat mitigation strategies (e.g., green infrastructure targeting)
+✅ Identifying urban heat islands  
+✅ Targeting areas for cooling infrastructure  
+✅ Supporting climate adaptation and heat resilience planning
 
 ---
 
@@ -108,7 +133,7 @@ Example evaluation metrics:
 - Google Earth Engine Documentation: https://developers.google.com/earth-engine
 - Landsat 8 Collection 2 Level-2 dataset
 - NDVI & NDBI index formulas
-- Project code: https://code.earthengine.google.com/155683c7c19a54f488da76d45f9c1bde
+
 ---
 
 ## 🤝 Acknowledgements
@@ -116,6 +141,10 @@ Example evaluation metrics:
 This project was developed by Konlavach Mengsuwan as a machine learning and remote sensing application using Google Earth Engine.
 
 ---
+
+## 📢 License
+
+MIT License
 
 ## Code
 ```
