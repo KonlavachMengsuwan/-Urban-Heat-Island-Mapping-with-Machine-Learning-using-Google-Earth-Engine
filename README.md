@@ -207,8 +207,83 @@ This map identifies priority areas for **urban cooling interventions**, such as 
 ## 🤝 Acknowledgements
 
 Developed by Konlavach Mengsuwan as a machine learning + remote sensing project using Google Earth Engine.
-
 ---
+
+## Code: https://code.earthengine.google.com/5e4a671be2390a759a8997b4d0da3365
+```
+var aoi = ee.Geometry.Rectangle([13.1, 52.3, 13.7, 52.7]);  // Example: Berlin
+Map.centerObject(aoi, 10);
+
+var landsat = ee.ImageCollection('LANDSAT/LC08/C02/T1_L2')
+              .filterBounds(aoi)
+              .filterDate('2024-06-01', '2024-08-31')  // Summer months
+              .filter(ee.Filter.lt('CLOUD_COVER', 10))
+              .median();
+
+var lst = landsat.select('ST_B10')
+                 .multiply(0.00341802)
+                 .add(149.0)
+                 .subtract(273.15);  // Convert to Celsius
+
+var vizParams = {min: 20, max: 40, palette: ['blue', 'green', 'yellow', 'red']};
+Map.addLayer(lst.clip(aoi), vizParams, 'Land Surface Temperature');
+
+var urban = ee.Image('ESA/WorldCover/v100/2020')
+              .eq(50);  // 50 = urban class
+              
+var urbanLST = lst.updateMask(urban);
+Map.addLayer(urbanLST.clip(aoi), vizParams, 'Urban LST');
+
+var districts = ee.FeatureCollection('FAO/GAUL_SIMPLIFIED_500m/2015/level2')
+                  .filterBounds(aoi);
+
+var stats = urbanLST.reduceRegions({
+  collection: districts,
+  reducer: ee.Reducer.mean(),
+  scale: 30
+});
+
+print(stats);
+
+
+// 1️⃣ Add input variables (NDVI, NDBI) as extra bands
+var ndvi = landsat.normalizedDifference(['SR_B5', 'SR_B4']).rename('NDVI');
+var ndbi = landsat.normalizedDifference(['SR_B6', 'SR_B5']).rename('NDBI');
+
+var input = lst.addBands(ndvi).addBands(ndbi);
+
+// 2️⃣ Create labeled heat stress zones from LST
+var low = lst.lt(28).selfMask().rename('class').int().multiply(0);
+var medium = lst.gte(28).and(lst.lt(32)).selfMask().rename('class').int().multiply(1);
+var high = lst.gte(32).and(lst.lt(36)).selfMask().rename('class').int().multiply(2);
+var extreme = lst.gte(36).selfMask().rename('class').int().multiply(3);
+
+var classImage = low.unmask().add(medium.unmask()).add(high.unmask()).add(extreme.unmask());
+
+// 3️⃣ Sample points from image
+var trainingPoints = input.addBands(classImage).stratifiedSample({
+  numPoints: 100,  // per class
+  classBand: 'class',
+  region: aoi,
+  scale: 30,
+  seed: 42,
+  geometries: true
+});
+
+// 4️⃣ Train Random Forest classifier
+var classifier = ee.Classifier.smileRandomForest(50).train({
+  features: trainingPoints,
+  classProperty: 'class',
+  inputProperties: input.bandNames()
+});
+
+// 5️⃣ Apply classifier
+var classified = input.classify(classifier);
+
+// 6️⃣ Visualize classified map
+var palette = ['green', 'yellow', 'orange', 'red'];
+Map.addLayer(classified, {min: 0, max: 3, palette: palette}, 'Heat Stress Zones');
+```
 
 ## 📢 License
 MIT License
