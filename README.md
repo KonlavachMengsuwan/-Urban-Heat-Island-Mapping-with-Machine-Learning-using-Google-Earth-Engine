@@ -48,8 +48,12 @@ All datasets are accessed and processed inside Google Earth Engine.
 5. Train **Random Forest classifier** using LST, NDVI, NDBI as features.
 6. Classify entire study area into heat stress zones.
 7. Visualize results and assess accuracy.
-
 ---
+
+![1_LST](https://github.com/user-attachments/assets/b8304912-d51f-4ea9-80c3-012d1935279e)
+![2_Heat](https://github.com/user-attachments/assets/afdf4b7e-deef-42b7-ba27-884edfe0c576)
+![3_Zoom1](https://github.com/user-attachments/assets/0ee263ae-310d-44cb-b733-47619a8fa6b1)
+![4_Zoom2](https://github.com/user-attachments/assets/c81c2b35-0c4a-4a50-8cfe-95722ed65a53)
 
 ## 🤖 Machine Learning: Random Forest Classifier
 
@@ -121,7 +125,8 @@ The Random Forest classifier was evaluated using a **70/30 train-test split** of
 
 ## 🖼️ Example Output
 
-![Classified UHI Map](outputs/classified_map.png)
+![5](https://github.com/user-attachments/assets/b2a6b330-f773-4865-8bfa-7da67618316d)
+![6](https://github.com/user-attachments/assets/866ebdb0-0dd4-4447-bf64-5a8e1313148e)
 
 _The map shows heat stress zones classified by the machine learning model:_
 
